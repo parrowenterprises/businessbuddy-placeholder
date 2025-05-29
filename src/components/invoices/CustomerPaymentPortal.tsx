@@ -6,12 +6,11 @@ import { BanknotesIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 interface CustomerPaymentPortalProps {
   invoice: Invoice;
   businessName: string;
-  onPaymentComplete: () => void;
 }
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-export default function CustomerPaymentPortal({ invoice, businessName, onPaymentComplete }: CustomerPaymentPortalProps) {
+export default function CustomerPaymentPortal({ invoice, businessName }: CustomerPaymentPortalProps) {
   const [loading, setLoading] = useState(false);
 
   const handlePayment = async () => {

@@ -1,12 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import type { Job, JobService, JobPhoto, JobNote, TimeEntry } from '../../lib/supabase';
 import {
-  ClockIcon,
-  CalendarIcon,
-  PhotoIcon,
-  ChatBubbleLeftIcon,
   CheckCircleIcon,
   PlayIcon,
 } from '@heroicons/react/24/outline';
@@ -29,7 +25,6 @@ type JobWithDetails = Job & {
 
 export default function JobDetail() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const [job, setJob] = useState<JobWithDetails | null>(null);
   const [photos, setPhotos] = useState<JobPhoto[]>([]);
   const [notes, setNotes] = useState<JobNote[]>([]);

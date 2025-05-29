@@ -5,7 +5,6 @@ import { AuthProvider } from './contexts/AuthContext';
 import { LoadingSpinner } from './components/common/LoadingSpinner';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import CreateInvoice from './pages/CreateInvoice';
-import CustomerPaymentPortal from './components/invoices/CustomerPaymentPortal';
 import PaymentPortal from './pages/PaymentPortal';
 import PaymentSuccess from './pages/PaymentSuccess';
 

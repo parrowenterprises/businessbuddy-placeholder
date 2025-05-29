@@ -17,6 +17,7 @@ interface JobWithDetails extends Job {
 
 const statusColors: Record<JobStatus, { bg: string; text: string; label: string }> = {
   draft: { bg: 'bg-gray-100', text: 'text-gray-800', label: 'Draft' },
+  scheduled: { bg: 'bg-blue-100', text: 'text-blue-800', label: 'Scheduled' },
   in_progress: { bg: 'bg-yellow-100', text: 'text-yellow-800', label: 'In Progress' },
   completed: { bg: 'bg-green-100', text: 'text-green-800', label: 'Completed' },
   cancelled: { bg: 'bg-red-100', text: 'text-red-800', label: 'Cancelled' },

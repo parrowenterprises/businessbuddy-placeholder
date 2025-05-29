@@ -66,14 +66,12 @@ export default function PaymentPortal() {
     }
   }
 
-  const handlePaymentComplete = () => {
-    navigate(`/pay/${invoiceId}/success`);
-  };
-
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="flex justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
       </div>
     );
   }
@@ -87,26 +85,13 @@ export default function PaymentPortal() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-lg mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">{businessProfile.business_name}</h1>
-          <p className="mt-2 text-gray-600">Invoice Payment</p>
-        </div>
-
-        <CustomerPaymentPortal
-          invoice={invoice}
-          businessName={businessProfile.business_name}
-          onPaymentComplete={handlePaymentComplete}
-        />
-
-        <div className="mt-8 text-center">
-          <p className="text-sm text-gray-500">
-            Having trouble? Contact {businessProfile.business_name} at{' '}
-            <a href={`tel:${businessProfile.phone}`} className="text-primary hover:text-primary/90">
-              {businessProfile.phone}
-            </a>
-          </p>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto">
+          <CustomerPaymentPortal
+            invoice={invoice}
+            businessName={businessProfile.business_name}
+          />
         </div>
       </div>
     </div>

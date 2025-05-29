@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../lib/supabase';
 import type { Customer } from '../../lib/supabase';
 import toast from 'react-hot-toast';
 

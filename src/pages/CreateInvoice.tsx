@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import type { Job, JobService, Customer, Profile } from '../lib/supabase';
-import { format, addDays } from 'date-fns';
+import { addDays } from 'date-fns';
 import toast from 'react-hot-toast';
 
 interface JobWithDetails extends Job {

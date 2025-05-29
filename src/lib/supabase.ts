@@ -78,7 +78,7 @@ export type QuoteService = {
   created_at: string;
 };
 
-export type JobStatus = 'scheduled' | 'in_progress' | 'completed' | 'cancelled';
+export type JobStatus = 'draft' | 'scheduled' | 'in_progress' | 'completed' | 'cancelled';
 export type PaymentStatus = 'unpaid' | 'partial' | 'paid';
 
 export interface Job {
@@ -96,6 +96,18 @@ export interface Job {
   total_amount: number;
   created_at: string;
   updated_at: string;
+  customers?: {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+  };
+  job_services?: JobService[];
+  quotes?: {
+    id: string;
+    status: string;
+  };
 }
 
 export interface JobService {

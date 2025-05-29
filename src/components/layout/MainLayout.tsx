@@ -2,19 +2,18 @@ import { Fragment, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
-  Bars3Icon,
   HomeIcon,
-  UsersIcon,
+  UserGroupIcon,
   DocumentTextIcon,
   ClipboardDocumentListIcon,
   Cog6ToothIcon,
-  XMarkIcon
+  Bars3Icon,
 } from '@heroicons/react/24/outline';
 import { useAuth } from '../../contexts/AuthContext';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
-  { name: 'Customers', href: '/customers', icon: UsersIcon },
+  { name: 'Customers', href: '/customers', icon: UserGroupIcon },
   { name: 'Quotes', href: '/quotes', icon: DocumentTextIcon },
   { name: 'Jobs', href: '/jobs', icon: ClipboardDocumentListIcon },
   { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },

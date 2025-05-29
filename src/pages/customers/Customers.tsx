@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import type { Customer } from '../../lib/supabase';
 import { MagnifyingGlassIcon, PhoneIcon, EnvelopeIcon, MapPinIcon } from '@heroicons/react/24/outline';
 import MainLayout from '../../components/layout/MainLayout';
-import UpgradeModal from '../../components/customers/UpgradeModal';
 import toast from 'react-hot-toast';
+import UpgradeModal from '../../components/customers/UpgradeModal';
 
 export default function Customers() {
   const navigate = useNavigate();
@@ -87,15 +87,6 @@ export default function Customers() {
     customer.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
     customer.address.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  const toggleSort = (field: typeof sortBy) => {
-    if (sortBy === field) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortBy(field);
-      setSortOrder('asc');
-    }
-  };
 
   return (
     <MainLayout>

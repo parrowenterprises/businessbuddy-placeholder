@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BusinessBuddy - All-in-One Business Management for Service Professionals</title>
+    <meta name="description" content="From customer to payment in one seamless workflow. BusinessBuddy helps service businesses manage customers, quotes, jobs, and invoices effortlessly." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+      
+      * {
+        font-family: 'Inter', sans-serif;
+      }
+      
+      .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      
+      .hero-text {
+        font-size: clamp(2.5rem, 8vw, 5rem);
+        font-weight: 900;
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+      }
+      
+      .floating-animation {
+        animation: float 6s ease-in-out infinite;
+      }
+      
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+      }
+      
+      .fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .feature-card:hover {
+        transform: translateY(-8px);
+        transition: all 0.3s ease;
+      }
+      
+      .pulse-glow {
+        animation: pulseGlow 2s infinite;
+      }
+      
+      @keyframes pulseGlow {
+        0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.4); }
+        50% { box-shadow: 0 0 40px rgba(102, 126, 234, 0.8); }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md fixed w-full z-50 border-b border-gray-200/20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center space-x-2">
+            <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+              <span class="text-white font-bold text-lg">B</span>
+            </div>
+            <span class="text-2xl font-bold text-gray-900">BusinessBuddy</span>
+          </div>
+          
+          <div class="hidden md:flex items-center space-x-8">
+            <a href="#features" class="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
+            <a href="#how-it-works" class="text-gray-600 hover:text-gray-900 transition-colors">How It Works</a>
+            <a href="#pricing" class="text-gray-600 hover:text-gray-900 transition-colors">Pricing</a>
+            <button onclick="window.location.href='/login'" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300 pulse-glow">
+              Start Free Trial
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0 gradient-bg"></div>
+      <div class="absolute inset-0 bg-black/20"></div>
+      
+      <!-- Floating Elements -->
+      <div class="absolute top-20 left-10 w-20 h-20 bg-white/10 rounded-full floating-animation"></div>
+      <div class="absolute top-40 right-20 w-16 h-16 bg-white/10 rounded-full floating-animation" style="animation-delay: -2s;"></div>
+      <div class="absolute bottom-40 left-20 w-12 h-12 bg-white/10 rounded-full floating-animation" style="animation-delay: -4s;"></div>
+      
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="fade-in-up">
+          <h1 class="hero-text text-white mb-6">
+            Run Your Business<br/>
+            <span class="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Like a Pro</span>
+          </h1>
+          
+          <p class="text-xl md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto leading-relaxed">
+            From customer to payment in one seamless workflow. BusinessBuddy is the all-in-one platform that helps service businesses manage customers, quotes, jobs, and invoices effortlessly.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+            <button onclick="window.location.href='/signup'" class="bg-white text-gray-900 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-2xl">
+              🚀 Start Free Trial - No Credit Card Required
+            </button>
+            <button class="text-white border-2 border-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-gray-900 transition-all duration-300">
+              📺 Watch 2-Min Demo
+            </button>
+          </div>
+          
+          <div class="flex flex-wrap justify-center items-center gap-8 text-white/80">
+            <div class="flex items-center space-x-2">
+              <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              <span>14-day free trial</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              <span>Setup in under 10 minutes</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              <span>Cancel anytime</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="py-12 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-8">
+          <p class="text-gray-600 font-medium">Trusted by 500+ service businesses</p>
+        </div>
+        <div class="flex flex-wrap justify-center items-center gap-8 opacity-60">
+          <div class="bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold">Elite Landscaping</div>
+          <div class="bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold">ProClean Services</div>
+          <div class="bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold">HandyMan Plus</div>
+          <div class="bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold">Perfect Painting Co</div>
+          <div class="bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold">GreenThumb Lawn Care</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem Statement -->
+    <section class="py-20 bg-gray-900 text-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-8">
+          Stop Juggling 5 Different Apps
+        </h2>
+        <p class="text-xl text-gray-300 mb-12 leading-relaxed">
+          Spreadsheets for customers, sticky notes for quotes, text messages for updates, 
+          separate invoicing software... Sound familiar? There's a better way.
+        </p>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-red-500/10 border border-red-500/20 rounded-2xl p-6">
+            <div class="text-red-400 text-4xl mb-4">😤</div>
+            <h3 class="text-xl font-semibold mb-2">Scattered Information</h3>
+            <p class="text-gray-400">Customer details in one place, job notes in another, invoices somewhere else entirely.</p>
+          </div>
+          
+          <div class="bg-red-500/10 border border-red-500/20 rounded-2xl p-6">
+            <div class="text-red-400 text-4xl mb-4">⏰</div>
+            <h3 class="text-xl font-semibold mb-2">Wasted Time</h3>
+            <p class="text-gray-400">Hours spent switching between apps, re-entering data, and hunting for information.</p>
+          </div>
+          
+          <div class="bg-red-500/10 border border-red-500/20 rounded-2xl p-6">
+            <div class="text-red-400 text-4xl mb-4">💸</div>
+            <h3 class="text-xl font-semibold mb-2">Lost Revenue</h3>
+            <p class="text-gray-400">Delayed invoices, forgotten follow-ups, and missed opportunities add up fast.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            One Platform, Complete Workflow
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            From first contact to final payment, BusinessBuddy handles your entire customer journey in one seamless workflow.
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-4 gap-8 mb-16">
+          <div class="text-center">
+            <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl">👥</span>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Add Customer</h3>
+            <p class="text-gray-600">Store all customer details, service history, and preferences in one place.</p>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl">📝</span>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Create Quote</h3>
+            <p class="text-gray-600">Build professional quotes with your services, send for instant approval.</p>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl">🔧</span>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Complete Job</h3>
+            <p class="text-gray-600">Track progress, add photos, manage time, and update customers automatically.</p>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl">💰</span>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Get Paid</h3>
+            <p class="text-gray-600">Send invoices instantly, accept online payments, track everything automatically.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-20 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            Everything You Need, Nothing You Don't
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Built specifically for service businesses who want to focus on the work they love, not paperwork.
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="feature-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Smart Customer Management</h3>
+            <p class="text-gray-600 mb-4">Keep all customer info, service history, and preferences organized. Never forget a detail or miss a follow-up again.</p>
+            <ul class="text-sm text-gray-500 space-y-2">
+              <li>✓ Complete customer profiles</li>
+              <li>✓ Service history tracking</li>
+              <li>✓ Automated reminders</li>
+            </ul>
+          </div>
+          
+          <div class="feature-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-6">
+              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Professional Quotes</h3>
+            <p class="text-gray-600 mb-4">Create beautiful, detailed quotes in minutes. Customers can approve online with digital signatures.</p>
+            <ul class="text-sm text-gray-500 space-y-2">
+              <li>✓ Custom quote templates</li>
+              <li>✓ Online approval system</li>
+              <li>✓ Digital signatures</li>
+            </ul>
+          </div>
+          
+          <div class="feature-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center mb-6">
+              <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Instant Payments</h3>
+            <p class="text-gray-600 mb-4">Send invoices instantly and get paid faster with online payment processing and automated reminders.</p>
+            <ul class="text-sm text-gray-500 space-y-2">
+              <li>✓ Online card payments</li>
+              <li>✓ Automated invoicing</li>
+              <li>✓ Payment reminders</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-20 bg-gray-900 text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold mb-6">
+            Simple, Transparent Pricing
+          </h2>
+          <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+            Start free, upgrade when you're ready. No hidden fees, no long-term contracts.
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <!-- Starter Plan -->
+          <div class="bg-gray-800 rounded-2xl p-8 relative">
+            <h3 class="text-2xl font-bold mb-4">Starter</h3>
+            <div class="text-4xl font-bold mb-2">Free</div>
+            <p class="text-gray-400 mb-8">Perfect for trying out BusinessBuddy</p>
+            
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                Up to 5 customers
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                5 quotes per month
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                Basic invoicing
+              </li>
+            </ul>
+            
+            <button onclick="window.location.href='/signup'" class="w-full bg-gray-700 text-white py-3 rounded-xl font-semibold hover:bg-gray-600 transition-colors">
+              Start Free
+            </button>
+          </div>
+          
+          <!-- Professional Plan -->
+          <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl p-8 relative">
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-gray-900 px-4 py-1 rounded-full text-sm font-semibold">
+              Most Popular
+            </div>
+            <h3 class="text-2xl font-bold mb-4">Professional</h3>
+            <div class="text-4xl font-bold mb-2">$29<span class="text-lg">/month</span></div>
+            <p class="text-blue-100 mb-8">For growing service businesses</p>
+            
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                Unlimited customers
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                Unlimited quotes & jobs
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                Online payments
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                Priority support
+              </li>
+            </ul>
+            
+            <button onclick="window.location.href='/signup'" class="w-full bg-white text-gray-900 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors">
+              Start 14-Day Trial
+            </button>
+          </div>
+        </div>
+        
+        <div class="text-center mt-12">
+          <p class="text-gray-400">All plans include a 14-day free trial. No credit card required.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          Ready to Transform Your Business?
+        </h2>
+        <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          Join hundreds of service businesses who've simplified their operations and increased their revenue with BusinessBuddy.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+          <button onclick="window.location.href='/signup'" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 pulse-glow">
+            🚀 Start Your Free Trial Now
+          </button>
+        </div>
+        
+        <div class="flex flex-wrap justify-center items-center gap-8 text-gray-500">
+          <div class="flex items-center space-x-2">
+            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            <span>No credit card required</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            <span>Setup in 10 minutes</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Add smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // Add fade-in animation on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in-up');
+          }
+        });
+      }, observerOptions);
+
+      // Observe all sections for animations
+      document.querySelectorAll('section > div').forEach(el => {
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>

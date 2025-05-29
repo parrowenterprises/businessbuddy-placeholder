@@ -23,7 +23,7 @@ export default function JobPhotoUpload({ jobId, photoType, onPhotoUploaded }: Jo
       // Upload to Supabase Storage
       const fileExt = file.name.split('.').pop();
       const fileName = `${jobId}/${Date.now()}.${fileExt}`;
-      const { data: uploadData, error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabase.storage
         .from('job-photos')
         .upload(fileName, file);
 
