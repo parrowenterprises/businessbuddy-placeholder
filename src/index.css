@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply text-gray-900 bg-gray-50;
+  }
+
+  /* Minimum touch target size */
+  button, a {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Form elements */
+  input, select, textarea {
+    @apply text-base;
+  }
+}
+
+@layer components {
+  /* Common button styles */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary text-white hover:bg-primary/90 focus:ring-primary;
+  }
+
+  .btn-secondary {
+    @apply btn bg-white text-gray-700 border-gray-300 hover:bg-gray-50 focus:ring-primary;
+  }
+
+  /* Card styles */
+  .card {
+    @apply bg-white shadow rounded-lg;
+  }
+
+  .card-header {
+    @apply px-4 py-5 border-b border-gray-200 sm:px-6;
+  }
+
+  .card-body {
+    @apply px-4 py-5 sm:p-6;
+  }
+
+  /* Form styles */
+  .form-label {
+    @apply block text-sm font-medium text-gray-700;
+  }
+
+  .form-input {
+    @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm;
+  }
+
+  .form-error {
+    @apply mt-2 text-sm text-red-600;
+  }
+
+  /* Loading spinner */
+  .spinner {
+    @apply animate-spin rounded-full border-2 border-gray-300;
+    border-top-color: theme('colors.primary.DEFAULT');
+  }
+}
+
+@layer utilities {
+  /* Custom scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full hover:bg-gray-400;
+  }
+
+  /* Text truncate with ellipsis */
+  .line-clamp-1 {
+    @apply overflow-hidden text-ellipsis whitespace-nowrap;
+  }
+
+  /* Responsive padding for mobile */
+  .safe-padding {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
