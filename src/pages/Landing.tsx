@@ -1,39 +1,40 @@
 import { Link } from 'react-router-dom';
 import {
-  ClipboardDocumentListIcon,
-  CurrencyDollarIcon,
-  CalendarIcon,
+  HomeIcon,
   UserGroupIcon,
+  DocumentTextIcon,
+  CreditCardIcon,
+  CheckCircleIcon
 } from '@heroicons/react/24/outline';
 
 const features = [
   {
-    name: 'Add customers in seconds',
-    description: 'Keep track of all your customers in one place, with easy access to their contact info and service history.',
+    name: 'Simple Customer Management',
+    description: 'Add customers in seconds with easy contact and address tracking.',
     icon: UserGroupIcon,
   },
   {
-    name: 'Create professional quotes',
-    description: 'Send polished, professional quotes that help you win more business and look established.',
-    icon: ClipboardDocumentListIcon,
+    name: 'Professional Quotes',
+    description: 'Create and send professional quotes that win you more business.',
+    icon: DocumentTextIcon,
   },
   {
-    name: 'Schedule jobs easily',
-    description: 'Manage your calendar and never double-book or forget an appointment again.',
-    icon: CalendarIcon,
+    name: 'Easy Scheduling',
+    description: 'Manage your jobs and schedule with a simple calendar view.',
+    icon: HomeIcon,
   },
   {
-    name: 'Get paid faster',
-    description: 'Send professional invoices and accept payments online - no more chasing checks!',
-    icon: CurrencyDollarIcon,
+    name: 'Get Paid Faster',
+    description: 'Send invoices with payment links for instant online payments.',
+    icon: CreditCardIcon,
   },
 ];
 
 const serviceTypes = [
-  { name: 'House Cleaning', emoji: '🏠' },
-  { name: 'Yard Work', emoji: '🌱' },
-  { name: 'Handyman', emoji: '🔧' },
-  { name: 'Laundry', emoji: '👕' },
+  { name: 'House Cleaning', icon: '🏠' },
+  { name: 'Yard Work', icon: '🌱' },
+  { name: 'Handyman', icon: '🔧' },
+  { name: 'Laundry', icon: '👕' },
 ];
 
 export default function Landing() {
@@ -50,7 +51,7 @@ export default function Landing() {
           </div>
           <div className="flex flex-1 justify-end">
             <Link
-              to="/auth/login"
+              to="/login"
               className="text-sm font-semibold leading-6 text-gray-900"
             >
               Log in <span aria-hidden="true">&rarr;</span>
@@ -62,7 +63,10 @@ export default function Landing() {
       <main>
         {/* Hero section */}
         <div className="relative isolate pt-14">
-          <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+          <div
+            className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+            aria-hidden="true"
+          >
             <div
               className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-primary to-secondary opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
               style={{
@@ -83,14 +87,17 @@ export default function Landing() {
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
                   <Link
-                    to="/auth/register"
+                    to="/register"
                     className="rounded-md bg-primary px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                   >
                     Start Free Trial
                   </Link>
-                  <a href="#features" className="text-sm font-semibold leading-6 text-gray-900">
-                    Learn more <span aria-hidden="true">→</span>
-                  </a>
+                  <Link
+                    to="/pricing"
+                    className="text-sm font-semibold leading-6 text-gray-900"
+                  >
+                    View pricing <span aria-hidden="true">→</span>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -102,18 +109,20 @@ export default function Landing() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                Join thousands of side-hustlers who've organized their business
+                Perfect for Your Service Business
               </h2>
               <p className="mt-6 text-lg leading-8 text-gray-600">
-                Perfect for all types of service businesses
+                Join thousands of side-hustlers who've organized their business with BusinessBuddy
               </p>
             </div>
             <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
               <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-4">
                 {serviceTypes.map((service) => (
                   <div key={service.name} className="flex flex-col items-center">
-                    <dt className="text-4xl mb-2">{service.emoji}</dt>
-                    <dd className="text-base leading-7 text-gray-600">{service.name}</dd>
+                    <dt className="text-4xl mb-4">{service.icon}</dt>
+                    <dd className="text-base font-semibold leading-7 text-gray-900">
+                      {service.name}
+                    </dd>
                   </div>
                 ))}
               </dl>
@@ -122,12 +131,12 @@ export default function Landing() {
         </div>
 
         {/* Features section */}
-        <div id="features" className="bg-gray-50 py-24 sm:py-32">
+        <div className="bg-gray-50 py-24 sm:py-32">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl lg:text-center">
-              <h2 className="text-base font-semibold leading-7 text-primary">Everything you need</h2>
+              <h2 className="text-base font-semibold leading-7 text-primary">Everything You Need</h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                Simple tools for growing businesses
+                Simple Tools for Growing Your Business
               </p>
               <p className="mt-6 text-lg leading-8 text-gray-600">
                 Focus on serving your customers - we'll handle the business stuff.
@@ -150,13 +159,58 @@ export default function Landing() {
             </div>
           </div>
         </div>
+
+        {/* CTA section */}
+        <div className="bg-white">
+          <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
+            <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
+              <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Start Growing Your Business Today
+              </h2>
+              <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">
+                Try BusinessBuddy free for your first 10 customers. No credit card required.
+              </p>
+              <div className="mt-10 flex items-center justify-center gap-x-6">
+                <Link
+                  to="/register"
+                  className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  Get started
+                </Link>
+                <Link
+                  to="/pricing"
+                  className="text-sm font-semibold leading-6 text-white"
+                >
+                  Learn more <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+              <svg
+                viewBox="0 0 1024 1024"
+                className="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2 -translate-y-1/2 [mask-image:radial-gradient(closest-side,white,transparent)]"
+                aria-hidden="true"
+              >
+                <circle cx={512} cy={512} r={512} fill="url(#gradient)" fillOpacity="0.7" />
+                <defs>
+                  <radialGradient id="gradient">
+                    <stop stopColor="#7775D6" />
+                    <stop offset={1} stopColor="#E935C1" />
+                  </radialGradient>
+                </defs>
+              </svg>
+            </div>
+          </div>
+        </div>
       </main>
 
       {/* Footer */}
-      <footer className="bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
-          <div className="mt-8 md:order-1 md:mt-0">
-            <p className="text-center text-xs leading-5 text-gray-500">
+      <footer className="bg-gray-900" aria-labelledby="footer-heading">
+        <h2 id="footer-heading" className="sr-only">
+          Footer
+        </h2>
+        <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
+          <div className="flex items-center justify-between">
+            <img className="h-8 w-auto" src="/logo-white.svg" alt="BusinessBuddy" />
+            <p className="text-sm leading-5 text-gray-400">
               &copy; {new Date().getFullYear()} BusinessBuddy. All rights reserved.
             </p>
           </div>

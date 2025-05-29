@@ -1,244 +1,197 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  UserGroupIcon,
+  DocumentTextIcon,
+  ClipboardDocumentListIcon,
+  ArrowTrendingUpIcon,
+  BanknotesIcon,
+  CalendarIcon,
+} from '@heroicons/react/24/outline';
 import { supabase } from '../lib/supabase';
-import type { Profile } from '../lib/supabase';
+import MainLayout from '../components/layout/MainLayout';
 
 interface DashboardStats {
-  jobsToday: number;
-  pendingQuotes: number;
-  pendingInvoices: number;
-  weeklyEarnings: number;
-  weeklyJobsCompleted: number;
-}
-
-interface RecentActivity {
-  id: string;
-  type: 'quote_approved' | 'job_completed' | 'payment_received';
-  description: string;
-  date: string;
+  totalCustomers: number;
+  activeQuotes: number;
+  scheduledJobs: number;
+  monthlyRevenue: number;
 }
 
 export default function Dashboard() {
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<DashboardStats>({
-    jobsToday: 0,
-    pendingQuotes: 0,
-    pendingInvoices: 0,
-    weeklyEarnings: 0,
-    weeklyJobsCompleted: 0,
+    totalCustomers: 0,
+    activeQuotes: 0,
+    scheduledJobs: 0,
+    monthlyRevenue: 0,
   });
-  const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
 
   useEffect(() => {
-    async function loadProfile() {
-      try {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) return;
+    const fetchStats = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
 
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', user.id)
-          .single();
+      // Fetch total customers
+      const { count: customerCount } = await supabase
+        .from('customers')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id);
 
-        setProfile(profile);
+      // Fetch active quotes
+      const { count: quoteCount } = await supabase
+        .from('quotes')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id)
+        .eq('status', 'sent');
 
-        // TODO: Load real stats and activity from the database
-        // For now, we'll show sample data
-        setStats({
-          jobsToday: 3,
-          pendingQuotes: 2,
-          pendingInvoices: 450,
-          weeklyEarnings: 1200,
-          weeklyJobsCompleted: 8,
-        });
+      // Fetch scheduled jobs
+      const { count: jobCount } = await supabase
+        .from('jobs')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id)
+        .eq('status', 'scheduled');
 
-        setRecentActivity([
-          {
-            id: '1',
-            type: 'quote_approved',
-            description: 'Sarah M. approved kitchen cleaning quote',
-            date: new Date().toISOString(),
-          },
-          {
-            id: '2',
-            type: 'job_completed',
-            description: 'Lawn service for Johnson family completed',
-            date: new Date().toISOString(),
-          },
-          {
-            id: '3',
-            type: 'payment_received',
-            description: 'Payment received: $85 from Miller property',
-            date: new Date().toISOString(),
-          },
-        ]);
-      } catch (error) {
-        console.error('Error loading profile:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
+      // Fetch monthly revenue
+      const startOfMonth = new Date();
+      startOfMonth.setDate(1);
+      startOfMonth.setHours(0, 0, 0, 0);
 
-    loadProfile();
+      const { data: jobs } = await supabase
+        .from('jobs')
+        .select('total_amount')
+        .eq('user_id', user.id)
+        .eq('status', 'paid')
+        .gte('completed_date', startOfMonth.toISOString());
+
+      const monthlyRevenue = jobs?.reduce((sum, job) => sum + (job.total_amount || 0), 0) || 0;
+
+      setStats({
+        totalCustomers: customerCount || 0,
+        activeQuotes: quoteCount || 0,
+        scheduledJobs: jobCount || 0,
+        monthlyRevenue,
+      });
+    };
+
+    fetchStats();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
+  const cards = [
+    {
+      name: 'Total Customers',
+      value: stats.totalCustomers,
+      href: '/customers',
+      icon: UserGroupIcon,
+    },
+    {
+      name: 'Active Quotes',
+      value: stats.activeQuotes,
+      href: '/quotes',
+      icon: DocumentTextIcon,
+    },
+    {
+      name: 'Scheduled Jobs',
+      value: stats.scheduledJobs,
+      href: '/jobs',
+      icon: ClipboardDocumentListIcon,
+    },
+    {
+      name: 'Monthly Revenue',
+      value: `$${stats.monthlyRevenue.toLocaleString()}`,
+      href: '/jobs',
+      icon: BanknotesIcon,
+    },
+  ];
 
-  // New user onboarding view
-  if (!profile?.business_name || !profile?.service_types?.length) {
-    return (
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white shadow sm:rounded-lg">
-          <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">
-              Welcome to BusinessBuddy! 👋
-            </h3>
-            <div className="mt-2 max-w-xl text-sm text-gray-500">
-              <p>Let's get your business organized in 3 simple steps:</p>
-            </div>
-            <div className="mt-5">
-              <div className="space-y-4">
-                <Link
-                  to="/app/customers/new"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                >
-                  1. Add your first customer
-                </Link>
-                <Link
-                  to="/app/services"
-                  className="block px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary bg-primary/10 hover:bg-primary/20"
-                >
-                  2. Set up your services
-                </Link>
-                <Link
-                  to="/app/help"
-                  className="block px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-600 bg-gray-100 hover:bg-gray-200"
-                >
-                  3. Get help if needed
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const quickActions = [
+    {
+      name: 'Add Customer',
+      href: '/customers/new',
+      icon: UserGroupIcon,
+      description: 'Add a new customer to your business',
+    },
+    {
+      name: 'Create Quote',
+      href: '/quotes/new',
+      icon: DocumentTextIcon,
+      description: 'Create a new quote for a customer',
+    },
+    {
+      name: 'Schedule Job',
+      href: '/jobs/new',
+      icon: CalendarIcon,
+      description: 'Schedule a new job on your calendar',
+    },
+    {
+      name: 'View Reports',
+      href: '/reports',
+      icon: ArrowTrendingUpIcon,
+      description: 'See how your business is growing',
+    },
+  ];
 
-  // Returning user operational view
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      {/* Today's Focus */}
-      <div className="bg-white shadow rounded-lg p-6 mb-6">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">Today's Focus</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <div className="text-2xl font-bold text-gray-900">{stats.jobsToday}</div>
-            <div className="text-sm text-gray-500">jobs scheduled today</div>
-          </div>
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <div className="text-2xl font-bold text-gray-900">{stats.pendingQuotes}</div>
-            <div className="text-sm text-gray-500">quotes waiting for approval</div>
-          </div>
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <div className="text-2xl font-bold text-gray-900">${stats.pendingInvoices}</div>
-            <div className="text-sm text-gray-500">pending invoices</div>
-          </div>
+    <MainLayout>
+      <div className="space-y-8">
+        {/* Page header */}
+        <div>
+          <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
+          <p className="mt-2 text-sm text-gray-700">
+            Get an overview of your business performance and quick access to common actions.
+          </p>
         </div>
-      </div>
 
-      {/* This Week Summary */}
-      <div className="bg-white shadow rounded-lg p-6 mb-6">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">This Week</h2>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <div className="text-2xl font-bold text-gray-900">${stats.weeklyEarnings}</div>
-            <div className="text-sm text-gray-500">earned</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-gray-900">{stats.weeklyJobsCompleted}</div>
-            <div className="text-sm text-gray-500">jobs completed</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="bg-white shadow rounded-lg p-6 mb-6">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Link
-            to="/app/customers/new"
-            className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90"
-          >
-            Add Customer
-          </Link>
-          <Link
-            to="/app/quotes/new"
-            className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary bg-primary/10 hover:bg-primary/20"
-          >
-            Create Quote
-          </Link>
-          <Link
-            to="/app/jobs/schedule"
-            className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary bg-primary/10 hover:bg-primary/20"
-          >
-            Schedule Job
-          </Link>
-          <Link
-            to="/app/invoices/new"
-            className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary bg-primary/10 hover:bg-primary/20"
-          >
-            Send Invoice
-          </Link>
-        </div>
-      </div>
-
-      {/* Recent Activity */}
-      <div className="bg-white shadow rounded-lg p-6">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">Recent Activity</h2>
-        <div className="flow-root">
-          <ul role="list" className="-mb-8">
-            {recentActivity.map((activity, activityIdx) => (
-              <li key={activity.id}>
-                <div className="relative pb-8">
-                  {activityIdx !== recentActivity.length - 1 ? (
-                    <span
-                      className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"
-                      aria-hidden="true"
-                    />
-                  ) : null}
-                  <div className="relative flex space-x-3">
-                    <div>
-                      <span className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center ring-8 ring-white">
-                        {activity.type === 'quote_approved' && '📋'}
-                        {activity.type === 'job_completed' && '✅'}
-                        {activity.type === 'payment_received' && '💰'}
-                      </span>
-                    </div>
-                    <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
-                      <div>
-                        <p className="text-sm text-gray-500">{activity.description}</p>
-                      </div>
-                      <div className="text-right text-sm whitespace-nowrap text-gray-500">
-                        <time dateTime={activity.date}>
-                          {new Date(activity.date).toLocaleDateString()}
-                        </time>
-                      </div>
-                    </div>
-                  </div>
+        {/* Stats cards */}
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {cards.map((card) => (
+            <Link
+              key={card.name}
+              to={card.href}
+              className="relative overflow-hidden rounded-lg bg-white px-4 pb-12 pt-5 shadow hover:bg-gray-50 sm:px-6 sm:pt-6"
+            >
+              <dt>
+                <div className="absolute rounded-md bg-primary/10 p-3">
+                  <card.icon className="h-6 w-6 text-primary" aria-hidden="true" />
                 </div>
-              </li>
+                <p className="ml-16 truncate text-sm font-medium text-gray-500">{card.name}</p>
+              </dt>
+              <dd className="ml-16 flex items-baseline pb-6 sm:pb-7">
+                <p className="text-2xl font-semibold text-gray-900">{card.value}</p>
+              </dd>
+              <div className="absolute inset-x-0 bottom-0 bg-gray-50 px-4 py-4 sm:px-6">
+                <div className="text-sm">
+                  <span className="font-medium text-primary">
+                    View all <span className="sr-only">{card.name}</span>
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        {/* Quick actions */}
+        <div>
+          <h2 className="text-base font-semibold leading-6 text-gray-900">Quick actions</h2>
+          <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {quickActions.map((action) => (
+              <Link
+                key={action.name}
+                to={action.href}
+                className="relative flex items-center space-x-4 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm hover:border-primary/60 hover:bg-primary/5"
+              >
+                <div className="flex-shrink-0">
+                  <action.icon className="h-6 w-6 text-primary" aria-hidden="true" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <span className="absolute inset-0" aria-hidden="true" />
+                  <p className="text-sm font-medium text-gray-900">{action.name}</p>
+                  <p className="truncate text-sm text-gray-500">{action.description}</p>
+                </div>
+              </Link>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
-    </div>
+    </MainLayout>
   );
 } 

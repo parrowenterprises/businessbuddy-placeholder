@@ -153,6 +153,14 @@ export default function Jobs() {
                           ${job.total_amount}
                         </td>
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                          {job.status === 'completed' && job.payment_status === 'unpaid' && (
+                            <Link
+                              to={`/app/invoices/create/${job.id}`}
+                              className="text-primary hover:text-primary/90 font-medium mr-4"
+                            >
+                              Generate Invoice
+                            </Link>
+                          )}
                           <Link to={`/app/jobs/${job.id}`} className="text-primary hover:text-primary/90">
                             View<span className="sr-only">, {job.id}</span>
                           </Link>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import type { Invoice, InvoiceStatus, JobService } from '../lib/supabase';
+import type { Invoice, InvoiceStatus, JobService, Profile } from '../lib/supabase';
 import {
   MapPinIcon,
   PhoneIcon,
@@ -41,11 +41,13 @@ export default function InvoiceDetail() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [invoice, setInvoice] = useState<InvoiceWithDetails | null>(null);
+  const [businessProfile, setBusinessProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
     loadInvoice();
+    loadBusinessProfile();
   }, [id]);
 
   useEffect(() => {
@@ -57,6 +59,24 @@ export default function InvoiceDetail() {
       navigate(`/app/invoices/${id}`, { replace: true });
     }
   }, [searchParams, id]);
+
+  async function loadBusinessProfile() {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+
+      if (error) throw error;
+      setBusinessProfile(data);
+    } catch (error) {
+      console.error('Error loading business profile:', error);
+    }
+  }
 
   async function loadInvoice() {
     try {
@@ -199,6 +219,25 @@ export default function InvoiceDetail() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Business Branding */}
+      {businessProfile && (
+        <div className="mb-8 border-b border-gray-200 pb-8">
+          <div className="flex justify-between items-start">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">{businessProfile.business_name}</h1>
+              <p className="mt-1 text-sm text-gray-500">{businessProfile.phone}</p>
+            </div>
+            <div className="text-right">
+              <h2 className="text-2xl font-semibold text-gray-900">INVOICE</h2>
+              <p className="mt-1 text-sm text-gray-500">#{invoice?.id.slice(0, 8)}</p>
+              <p className="mt-1 text-sm text-gray-500">
+                Created: {invoice?.created_at && format(parseISO(invoice.created_at), 'MMMM d, yyyy')}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="sm:flex sm:items-center sm:justify-between">
         <div>

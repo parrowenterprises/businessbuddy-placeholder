@@ -3,7 +3,17 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables');
+}
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: true
+  }
+});
 
 export type Profile = {
   id: string;
@@ -13,6 +23,22 @@ export type Profile = {
   subscription_tier: 'free' | 'professional';
   customer_limit: number;
   created_at: string;
+};
+
+export type Customer = {
+  id: string;
+  user_id: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  lat?: number;
+  lng?: number;
+  notes?: string;
+  total_spent: number;
+  last_job_date?: string;
+  created_at: string;
+  updated_at: string;
 };
 
 export type Service = {
@@ -52,50 +78,61 @@ export type QuoteService = {
   created_at: string;
 };
 
-export type JobStatus = 'draft' | 'in_progress' | 'completed' | 'cancelled';
+export type JobStatus = 'scheduled' | 'in_progress' | 'completed' | 'cancelled';
 export type PaymentStatus = 'unpaid' | 'partial' | 'paid';
 
 export interface Job {
   id: string;
-  created_at: string;
-  updated_at: string;
+  user_id: string;
+  customer_id: string;
+  quote_id?: string;
   title: string;
   description: string;
+  scheduled_date?: string;
+  start_time?: string;
+  end_time?: string;
   status: JobStatus;
   payment_status: PaymentStatus;
   total_amount: number;
-  customer_id: string;
-  business_id: string;
-  quote_id?: string;
-  customers: {
-    id: string;
-    name: string;
-    email: string;
-    phone: string;
-    address: string;
-  };
-  job_services: {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-    quantity: number;
-  }[];
-  quotes?: {
-    id: string;
-    status: QuoteStatus;
-  };
+  created_at: string;
+  updated_at: string;
 }
 
-export type JobService = {
+export interface JobService {
   id: string;
   job_id: string;
   service_name: string;
   price: number;
   quantity: number;
   notes?: string;
+}
+
+export interface JobPhoto {
+  id: string;
+  job_id: string;
+  photo_url: string;
+  photo_type: 'before' | 'after' | 'progress';
+  caption?: string;
   created_at: string;
-};
+}
+
+export interface JobNote {
+  id: string;
+  job_id: string;
+  user_id: string;
+  content: string;
+  created_at: string;
+}
+
+export interface TimeEntry {
+  id: string;
+  job_id: string;
+  user_id: string;
+  start_time: string;
+  end_time?: string;
+  description?: string;
+  created_at: string;
+}
 
 export type InvoiceStatus = 'draft' | 'sent' | 'paid' | 'overdue' | 'cancelled';
 
