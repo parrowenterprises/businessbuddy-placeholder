@@ -2,12 +2,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import {
+  Bars3Icon,
   HomeIcon,
   UsersIcon,
   ClipboardDocumentListIcon,
-  Cog6ToothIcon,
-  XMarkIcon,
-  Bars3Icon
 } from '@heroicons/react/24/outline';
 
 interface NavigationProps {
@@ -18,8 +16,11 @@ interface NavigationProps {
 const navigation = [
   { name: 'Dashboard', href: '/app', icon: HomeIcon },
   { name: 'Customers', href: '/app/customers', icon: UsersIcon },
+  { name: 'Quotes', href: '/app/quotes', icon: ClipboardDocumentListIcon },
+  { name: 'Jobs', href: '/app/jobs', icon: ClipboardDocumentListIcon },
+  { name: 'Invoices', href: '/app/invoices', icon: ClipboardDocumentListIcon },
   { name: 'Services', href: '/app/services', icon: ClipboardDocumentListIcon },
-  { name: 'Settings', href: '/app/settings', icon: Cog6ToothIcon },
+  { name: 'Settings', href: '/app/settings', icon: ClipboardDocumentListIcon },
 ];
 
 export default function Navigation({ isSidebarOpen, setIsSidebarOpen }: NavigationProps) {

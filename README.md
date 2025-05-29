@@ -99,14 +99,44 @@ CREATE TABLE services (
   created_at TIMESTAMP DEFAULT NOW()
 );
 
--- Create jobs table
+-- Create quotes table
+CREATE TABLE quotes (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+  customer_id UUID REFERENCES customers(id) ON DELETE CASCADE,
+  status TEXT CHECK (status IN ('draft', 'sent', 'approved', 'rejected', 'expired')) DEFAULT 'draft',
+  total_amount DECIMAL(10,2),
+  valid_until TIMESTAMP,
+  notes TEXT,
+  customer_notes TEXT,
+  created_at TIMESTAMP DEFAULT NOW(),
+  sent_at TIMESTAMP,
+  approved_at TIMESTAMP,
+  rejected_at TIMESTAMP
+);
+
+-- Create quote services table
+CREATE TABLE quote_services (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  quote_id UUID REFERENCES quotes(id) ON DELETE CASCADE,
+  service_name TEXT NOT NULL,
+  price DECIMAL(10,2) NOT NULL,
+  quantity INTEGER DEFAULT 1,
+  notes TEXT,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Create jobs table (modified to link with quotes)
 CREATE TABLE jobs (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
   customer_id UUID REFERENCES customers(id) ON DELETE CASCADE,
-  status TEXT CHECK (status IN ('quote_sent', 'scheduled', 'in_progress', 'completed', 'paid')),
+  quote_id UUID REFERENCES quotes(id),
+  status TEXT CHECK (status IN ('scheduled', 'in_progress', 'completed', 'cancelled', 'paid')),
   total_amount DECIMAL(10,2),
   scheduled_date TIMESTAMP,
+  completed_date TIMESTAMP,
+  payment_status TEXT CHECK (payment_status IN ('unpaid', 'partial', 'paid')) DEFAULT 'unpaid',
   notes TEXT,
   created_at TIMESTAMP DEFAULT NOW()
 );
@@ -118,6 +148,7 @@ CREATE TABLE job_services (
   service_name TEXT NOT NULL,
   price DECIMAL(10,2) NOT NULL,
   quantity INTEGER DEFAULT 1,
+  notes TEXT,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
@@ -125,6 +156,8 @@ CREATE TABLE job_services (
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE customers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE services ENABLE ROW LEVEL SECURITY;
+ALTER TABLE quotes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE quote_services ENABLE ROW LEVEL SECURITY;
 ALTER TABLE jobs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE job_services ENABLE ROW LEVEL SECURITY;
 
@@ -132,6 +165,8 @@ ALTER TABLE job_services ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Users manage own profile" ON profiles FOR ALL USING (auth.uid() = id);
 CREATE POLICY "Users manage own customers" ON customers FOR ALL USING (auth.uid() = user_id);
 CREATE POLICY "Users manage own services" ON services FOR ALL USING (auth.uid() = user_id);
+CREATE POLICY "Users manage own quotes" ON quotes FOR ALL USING (auth.uid() = user_id);
+CREATE POLICY "Users manage own quote_services" ON quote_services FOR ALL USING (auth.uid() = (SELECT user_id FROM quotes WHERE quotes.id = quote_id));
 CREATE POLICY "Users manage own jobs" ON jobs FOR ALL USING (auth.uid() = user_id);
 CREATE POLICY "Users manage own job_services" ON job_services FOR ALL USING (auth.uid() = (SELECT user_id FROM jobs WHERE jobs.id = job_id));
 ```
